@@ -1,0 +1,237 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "OVERDIVE API DOCUMENTAÇÃO",
+        "description": "OVERDIVE API DOCUMENTAÇÃO",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/historystatus": {
+            "get": {
+                "tags": [
+                    "Historico dos Status"
+                ],
+                "summary": "Todos os Historicos dos Status",
+                "description": "Retorna todos os historicos dos status cadastrados no sistema",
+                "operationId": "indexStatus",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "ID da pessoa ou USUARIO",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/api/v1/historystatus/{uuid}": {
+            "get": {
+                "tags": [
+                    "Historico dos Status"
+                ],
+                "summary": "Historico dos Status",
+                "description": "Retorna um historico dos status cadastrado no sistema",
+                "operationId": "showStatus",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID do historico dos status",
+                        "required": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/api/v1/peoples": {
+            "get": {
+                "tags": [
+                    "Pessoas"
+                ],
+                "summary": "Todas as Pessoas",
+                "description": "Retorna todas as pessoas cadastradas no sistema",
+                "operationId": "index",
+                "parameters": [
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Nome da pessoa",
+                        "required": false,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pessoas"
+                ],
+                "summary": "Cadastrar Pessoa",
+                "description": "Cadastra uma pessoa no sistema",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Dados da pessoa",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "document": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "char",
+                                        "example": "A"
+                                    },
+                                    "user": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/api/v1/peoples/{uuid}": {
+            "get": {
+                "tags": [
+                    "Pessoas"
+                ],
+                "summary": "Pessoa",
+                "description": "Retorna uma pessoa cadastrada no sistema",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID da pessoa",
+                        "required": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Pessoas"
+                ],
+                "summary": "Atualizar Pessoa",
+                "description": "Atualiza uma pessoa no sistema",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "uuid",
+                        "in": "path",
+                        "description": "UUID da pessoa",
+                        "required": true,
+                        "explode": true,
+                        "schema": {
+                            "type": "string",
+                            "example": ""
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Dados da pessoa",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "document": {
+                                        "type": "string"
+                                    },
+                                    "phone": {
+                                        "type": "string"
+                                    },
+                                    "status": {
+                                        "type": "char",
+                                        "example": "A"
+                                    },
+                                    "user": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        }
+    }
+}
