@@ -12,12 +12,31 @@ use Illuminate\Support\Str;
 class _ControlCommon extends BaseController
 {
 
+    private $authController;
     private $exception;
 
-    public function __construct(Exception $exception)
+    public function __construct(AuthController $authController, Exception $exception)
     {
+        $this->authController = $authController;
         $this->exception = $exception;
     }
+
+    public function userAuthorization($gate)
+    {
+        $roleIrresctrict = 'super';
+        if (!Auth::user()) {
+            abort(401, 'Usuario sem login ou sessao expirada.');
+        }
+        $idUserLogin = Auth::user()->id;
+        $permissionsUser = $this->authController->permissionsUser();
+
+        if ((!in_array($gate, $permissionsUser)) && (!in_array($roleIrresctrict, $permissionsUser))) {
+            abort(403, 'Nao autorizado!');
+        } else {
+            return $idUserLogin;
+        }
+    }
+
 
     public function dateFilters()
     {
@@ -88,6 +107,46 @@ class _ControlCommon extends BaseController
                 'type' => get_class($this->exception),
                 'message' => $this->exception->getMessage()
             ], 500);
+        }
+    }
+
+    public function generatePass($name, $email)
+    {
+        $name = explode(' ', $name);
+
+        $minute = date('i');
+        $hour = date('H');
+        $leters = array('A', 'j', 'B', 'k', 'C', 'l', '%', 'm', 'E', 'n', '?', 'o', 'G', '&', '!', 'H', 'q', 'I', 'r', 'J', 's', '#', 't', 'L', 'u', 'M', '-', '$', 'v', 'N', 'w', 'O', '(', ':', 'y', 'Q', 'z', 'R', 'a', 'S', 'b', 'T', 'c', '+', 'd', 'V', 'e', '&', 'f', '@', 'g', 'Y', 'h', 'Z', 'i', 'X', 'j', 'W', '&', 'k', 'U');
+
+        $hour = intval($hour);
+        $minute = intval($minute);
+
+        if (count($name) >= 3) {
+            $pass = $name[2][0] . $leters[$minute] . $name[1][0] . $leters[$hour + 5] . $name[0][0] . $leters[$hour] . $email[1] . "@" . $email[0];
+        } else {
+            if (count($name) >= 2) {
+                $pass = $name[1][0] . $leters[$minute] . $name[0][0] . $leters[$hour + 5] . "&" . $leters[$hour] . $email[1] . "@" . $email[0];
+            } else {
+                $pass = $leters[15] . $leters[$minute] . $name[0][0] . $leters[$hour + 5] . "&" . $leters[$hour] . $email[1] . "@" . $email[0];
+            }
+        }
+        return $pass;
+    }
+
+    public function insertLog($id, $table, $action)
+    {
+        if (Auth::user()) {
+            $user = Auth::user();
+
+            $create = Audit::create([
+                'uuid' => Str::uuid(),
+                'user_id' => $user->id,
+                'username' => $user->fullname,
+                'email' => $user->email,
+                'action' => $action,
+                'model' => $table,
+                'register' => $id
+            ]);
         }
     }
 }
