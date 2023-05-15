@@ -5,25 +5,28 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
-    
-    use  HasFactory, Notifiable;
 
-    protected $table = 'roles';
-    protected $primaryKey = 'id';
-    protected $fillable = [
-        'id',
+	use SoftDeletes, HasFactory, Notifiable;
+
+	protected $table = 'roles';
+	protected $primaryKey = 'id';
+	protected $fillable = [
+		'id',
 		'name',
-		'slug'
-    ];
-    
+		'description',
+	];
 
-    public function users()
-    {
-        return $this->hasMany(User::class);
-    }
-     
+	public function users()
+	{
+		return $this->belongsToMany(User::class)->withPivot('id');
+	}
+
+	public function permissions()
+	{
+		return $this->belongsToMany(Permission::class)->withPivot('id');
+	}
 }
