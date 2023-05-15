@@ -5,19 +5,25 @@
                 <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
 
                     <div class="flex flex-shrink-0 items-center">
-                        {{-- <a href="{{ route('categories.index') }}">
-                            <img  class="block h-10 w-auto lg:hidden"
-                            src="https://www.supera.com.br/wp-content/uploads/2020/11/nova-logo-supera-branca.svg"
-                            alt="Desafio Supera">
-                            <img class="hidden h-10 w-auto lg:block"
-                            src="https://www.supera.com.br/wp-content/uploads/2020/11/nova-logo-supera-branca.svg"
-                            alt="Desafio Supera">
-                        </a> --}}
+                        <a href="{{ route('dashboard') }}">
+                            Minimal Blog
+                        </a>
                     </div>
                     <div class="hidden sm:ml-6 sm:block">
                         <div class="flex space-x-4">
                             @auth
-                                @if(Request::is('admin*'))
+                                {{-- @can('categories') --}}
+                                    <a href="/"
+                                        class="text-gray-300 hover:bg-gray-700
+                                    hover:text-white
+                                    px-3
+                                    py-2
+                                    rounded-md
+                                    text-sm
+                                    font-medium">Site</a>
+                                {{-- @endif --}}
+                                
+                                {{-- @can('categories') --}}
                                     <a href="{{ route('categories.index') }}"
                                         class="text-gray-300 hover:bg-gray-700
                                     hover:text-white
@@ -26,6 +32,8 @@
                                     rounded-md
                                     text-sm
                                     font-medium">Categorias</a>
+                                {{-- @endif --}}
+
                                     <a href="{{ route('tags.index') }}"
                                         class="text-gray-300 hover:bg-gray-700
                                     hover:text-white
@@ -43,7 +51,7 @@
                                     rounded-md
                                     text-sm
                                     font-medium">Posts</a>
-                                    <a href="{{ route('admin.settings') }}"
+                                    <a href="{{ route('settings') }}"
                                         class="text-gray-300
                                     hover:bg-gray-700
                                     hover:text-white
@@ -52,27 +60,6 @@
                                     rounded-md
                                     text-sm
                                     font-medium">Usuarios</a> 
-                                @endif
-                                @if(Request::is('author*'))
-                                    <a href="{{ route('posts.index') }}"
-                                        class="text-gray-300
-                                    hover:bg-gray-700
-                                    hover:text-white
-                                    px-3
-                                    py-2
-                                    rounded-md
-                                    text-sm
-                                    font-medium">Posts</a>
-                                    <a href="{{ route('author.settings') }}"
-                                        class="text-gray-300
-                                    hover:bg-gray-700
-                                    hover:text-white
-                                    px-3
-                                    py-2
-                                    rounded-md
-                                    text-sm
-                                    font-medium">Usuarios</a> 
-                                @endif
                             @endauth
                         </div>
                     </div>

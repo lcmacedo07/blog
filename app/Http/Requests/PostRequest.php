@@ -15,8 +15,8 @@ class PostRequest extends FormRequest
     {
         return [
             
-            'category_id' => 'required|numeric',
-            'tag_id' => 'required|numeric',
+            // 'category_id' => 'required|numeric',
+            // 'tag_id' => 'required|numeric',
             'title' => 'required|max:120',
 			'image' => 'required|mimes:jpeg,bmp,png,jpg',
             'body' => 'required'

@@ -16,7 +16,9 @@ class CreateSubscribersTable extends Migration
         Schema::create('subscribers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
+
             $table->timestamps();
+			$table->softDeletes();
         });
     }
 }

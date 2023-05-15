@@ -19,7 +19,9 @@ class CreatePostUserTable extends Migration
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
 
             $table->integer('user_id');
+
             $table->timestamps();
+			$table->softDeletes();
         });
     }
 }

@@ -7,9 +7,19 @@ use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\View;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $categories = Category::all();
+        $posts = Post::latest()->approved()->published()->take(6)->get();
+
+        View::share('categories', $categories);
+        View::share('posts', $posts);
+    }
     
     public function index()
     {
@@ -36,6 +46,7 @@ class PostController extends Controller
     {
         $category = Category::where('slug',$slug)->first();
         $posts = $category->posts()->approved()->published()->get();
+
         return view('category',compact('category','posts'));
     }
 

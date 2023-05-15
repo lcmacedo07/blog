@@ -59,7 +59,7 @@
                             <div class="form-group form-float">
                                 <div class="form-line {{ $errors->has('categories') ? 'focused error' : '' }}">
                                     <label for="category">Categoria</label>
-                                    <select name="category_id" value="{{ $posts->category_id }}" id="category" class="form-select"
+                                    <select name="category_id[]" value="{{ $posts->category_id }}" id="category" class="form-select"
                                         aria-label="Default select example">
                                         @foreach ($categories as $category)
                                             <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -68,11 +68,12 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-6 pb-3">
                             <div class="form-group form-float">
                                 <div class="form-line {{ $errors->has('tags') ? 'focused error' : '' }}">
                                     <label for="tag">Tag</label>
-                                    <select name="tag_id" value="{{ $posts->tag_id }}" id="tag" class="form-select"
+                                    <select name="tag_id[]" value="{{ $posts->tag_id }}" id="tag" class="form-select"
                                         aria-label="Default select example">
                                         @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
@@ -81,6 +82,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                         <div class="col-md-12 pb-12">
                             <div class="form-group form-float">
                                 <div class="form-line">

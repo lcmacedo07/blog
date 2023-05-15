@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\Admin;
+namespace App\Interfaces\v1;
 
 use App\Http\Requests\PostRequest;
 

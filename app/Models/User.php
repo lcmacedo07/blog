@@ -36,10 +36,16 @@ class User extends Authenticatable
     ];
     
 
-    public function role()
+    public function roles()
     {
-        return $this->belongsTo(Role::class);
+        return $this->belongsToMany(Role::class)->withPivot('id');
     }
+
+    public function permissions()
+    {
+        return $this->hasManyThrough(Permission::class, Role::class);
+    }
+    
     public function posts()
     {
         return $this->hasMany(Post::class);

@@ -7,25 +7,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 
-class Category extends Model
+class CategoryPost extends Model
 {
     
     use  HasFactory, Notifiable;
 
-    protected $table = 'categories';
+    protected $table = 'category_post';
     protected $primaryKey = 'id';
     protected $fillable = [
         'id',
-		'name',
-        'slug',
-        'image',
+		'post_id',
+        'category_id'
          
     ];
      
-    public function posts()
-    {
-        return $this->belongsToMany(Post::class, 'category_post')->withTimestamps();
-    }
-
-
 }

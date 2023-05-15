@@ -1,45 +1,20 @@
-<!-- Top Bar Nav -->
-<nav class="w-full py-4 bg-blue-800 shadow">
-    <div class="w-full container mx-auto flex flex-wrap items-center justify-between">
-
-        <nav>
-            <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-                <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Shop</a></li>
-                <li><a class="hover:text-gray-200 hover:underline px-4" href="#">About</a></li>
-            </ul>
-        </nav>
-
-        <div class="flex items-center text-lg no-underline text-white pr-6">
-            <a class="" href="#">
-                <i class="fab fa-facebook"></i>
-            </a>
-            <a class="pl-6" href="#">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a class="pl-6" href="#">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a class="pl-6" href="#">
-                <i class="fab fa-linkedin"></i>
-            </a>
-        </div>
-    </div>
-
-</nav>
-
-<!-- Text Header -->
 <header class="w-full container mx-auto">
-    <div class="flex flex-col items-center py-12">
-        <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="#">
-            Minimal Blog
-        </a>
-        <p class="text-lg text-gray-600">
-            Lorem Ipsum Dolor Sit Amet
-        </p>
+    <div class="flex flex-col items-center md:flex-row md:justify-between py-12">
+        <div class="flex flex-col items-center md:items-start">
+            <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="/">
+                Minimal Blog
+            </a>
+            <p class="text-lg text-gray-600">
+                Lorem Ipsum Dolor Sit Amet
+            </p>
+        </div>
+        <form action="{{ route('search') }}" method="GET" class="flex">
+            <input type="text" name="query" placeholder="Digite sua pesquisa..." class="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md ml-2">Pesquisar</button>
+        </form>
     </div>
 </header>
 
-<!-- Topic Nav -->
 <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
     <div class="block sm:hidden">
         <a href="#"
@@ -49,9 +24,11 @@
         </a>
     </div>
     <div :class="open ? 'block' : 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
-        <div
-            class="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
-            <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Technology</a>
+        <div class="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
+
+            @foreach($categories as $category)
+                <a href="{{ route('category.posts',$category->slug) }}" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">{{ $category->name }}</a>
+            @endforeach
 
             @if (Route::has('login'))
                 @auth
@@ -72,51 +49,55 @@
     </div>
 </nav>
 
+<style>
+    form {
+        display: flex;
+        align-items: center;
+    }
 
+    input[type="text"] {
+        width: 300px;
+    }
 
+    button[type="submit"] {
+        background-color: #3490dc;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 4px;
+    }
 
-{{-- <header>
-    <nav class="bg-gray-500">
-        <div class="container">
-            <div class="relative flex h-16 items-center justify-between">
-                <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+    /* Estilos para os resultados da pesquisa */
+    .bg-white {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 16px;
+        margin-bottom: 16px;
+    }
 
-                  
-                    <div class="flex flex-shrink-0 items-center">
-                        <h1 class="text-3xl text-white font-bold">Portal de Blog</h1>
-                    </div>
-                    <div class="hidden sm:ml-6 sm:block">
-                        <div class="flex space-x-4">
-                                <a href="{{ route('home') }}"
-                                    class="text-gray-300 hover:bg-gray-700
-                                hover:text-white
-                                px-3
-                                py-2
-                                rounded-md
-                                text-sm
-                                font-medium">Categorias</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    @if (Route::has('login'))
-                        <div class="flex w-full">
-                            @auth
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Sair</button>
-                                </form>
-                            @else
-                                <a href="{{ route('login') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
-                
-                                @if (Route::has('register'))
-                                    <a href="{{ route('register') }}" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Register</a>
-                                @endif
-                            @endauth
-                        </div>
-                    @endif
-                </div>
-            </div>
-        </div>
-    </nav>
-</header> --}}
+    .text-blue-700 {
+        color: #3182ce;
+    }
+
+    .text-3xl {
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+    }
+
+    .text-sm {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    .text-gray-800 {
+        color: #2d3748;
+    }
+
+    .uppercase {
+        text-transform: uppercase;
+    }
+
+    .hover:text-black:hover {
+        color: black;
+    }
+</style>

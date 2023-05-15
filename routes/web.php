@@ -2,18 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\PostController as AdminPostController;
-use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\SettingController;
-
-use App\Http\Controllers\Author\PostController as AuthorPostController;
-use App\Http\Controllers\Author\DashboardController as AuthorDashboardController;
+use App\Http\Controllers\v1\CategoryController;
+use App\Http\Controllers\v1\PostController as v1PostController;
+use App\Http\Controllers\v1\TagController;
+use App\Http\Controllers\v1\DashboardController;
+use App\Http\Controllers\v1\SettingController;
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\SearchController;
 
 
 
@@ -27,32 +25,24 @@ Route::get('tag/{slug}',  [PostController::class, 'postByTag'])->name('tag.posts
 
 Route::get('profile/{username}',  [AuthorController::class, 'profile'])->name('author.profile');
 
+Route::get('/search',[SearchController::class, 'search'])->name('search');
+
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::get('settings', [SettingController::class, 'index'])->name('admin.settings');
+    Route::get('settings', [SettingController::class, 'index'])->name('settings');
     Route::put('profile-update', [SettingController::class, 'updateProfile'])->name('profile.update');
     Route::put('password-update', [SettingController::class, 'updatePassword'])->name('password.update');
 
     Route::resource('categories', CategoryController::class);
-    Route::resource('posts', AdminPostController::class);
+    Route::resource('posts', v1PostController::class);
     Route::resource('tags', TagController::class);
 
-    Route::get('/pending/post', [AdminPostController::class, 'pending'])->name('post.pending');
-    Route::put('/post/{id}/approve', [AdminPostController::class, 'approval'])->name('post.approve');
+    Route::get('/pending/post', [v1PostController::class, 'pending'])->name('post.pending');
+    Route::put('/post/{id}/approve', [v1PostController::class, 'approval'])->name('post.approve');
 });
 
-Route::group(['prefix' => 'author',  'middleware' => 'auth'], function() { 
-
-    Route::get('dashboard', [AuthorDashboardController::class, 'index'])->name('author.dashboard');
-
-    Route::get('settings', [SettingController::class, 'index'])->name('author.settings');
-    Route::put('profile-update', [SettingController::class, 'updateProfile'])->name('profile.update');
-    Route::put('password-update', [SettingController::class, 'updatePassword'])->name('password.update');
-
-    Route::resource('posts', AuthorPostController::class);
-});
 
 
 Auth::routes();

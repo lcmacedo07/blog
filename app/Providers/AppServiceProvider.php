@@ -11,6 +11,14 @@ use App\Models\Post;
 use App\Observers\PostObserver;
 use App\Models\Tag;
 use App\Observers\TagObserver;
+use App\Models\Role;
+use App\Observers\RoleObserver;
+use App\Models\RoleUser;
+use App\Observers\RoleUserObserver;
+use App\Models\Permission;
+use App\Observers\PermissionObserver;
+use App\Models\PermissionRole;
+use App\Observers\PermissionRoleObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -18,47 +26,52 @@ class AppServiceProvider extends ServiceProvider
     {
         
 		$this->app->bind(
-			'App\Interfaces\Admin\CategoryInterface',
-			'App\Repositories\Admin\CategoryRepository'
+			'App\Interfaces\v1\CategoryInterface',
+			'App\Repositories\v1\CategoryRepository'
 		);
         
 		$this->app->bind(
-			'App\Interfaces\Admin\PostInterface',
-			'App\Repositories\Admin\PostRepository'
+			'App\Interfaces\v1\PostInterface',
+			'App\Repositories\v1\PostRepository'
 		);
 		
         
 		$this->app->bind(
-			'App\Interfaces\Admin\TagInterface',
-			'App\Repositories\Admin\TagRepository'
+			'App\Interfaces\v1\TagInterface',
+			'App\Repositories\v1\TagRepository'
 		);
 
 		$this->app->bind(
-            'App\Interfaces\Admin\SettingInterface',
-            'App\Repositories\Admin\SettingRepository'
+            'App\Interfaces\v1\SettingInterface',
+            'App\Repositories\v1\SettingRepository'
         );
 
 		$this->app->bind(
-            'App\Interfaces\Admin\DashboardInterface',
-            'App\Repositories\Admin\DashboardRepository'
+            'App\Interfaces\v1\DashboardInterface',
+            'App\Repositories\v1\DashboardRepository'
+        );
+
+		$this->app->bind(
+            'App\Interfaces\v1\RoleInterface',
+            'App\Repositories\v1\RoleRepository'
+        );
+
+		$this->app->bind(
+            'App\Interfaces\v1\RoleUserInterface',
+            'App\Repositories\v1\RoleUserRepository'
+        );
+
+		$this->app->bind(
+            'App\Interfaces\v1\PermissionInterface',
+            'App\Repositories\v1\PermissionRepository'
+        );
+
+		$this->app->bind(
+            'App\Interfaces\v1\PermissionRoleInterface',
+            'App\Repositories\v1\PermissionRoleRepository'
         );
         
 	
-		$this->app->bind(
-			'App\Interfaces\Author\PostInterface',
-			'App\Repositories\Author\PostRepository'
-		);
-	
-		$this->app->bind(
-            'App\Interfaces\Author\SettingInterface',
-            'App\Repositories\Author\SettingRepository'
-        );
-
-		$this->app->bind(
-            'App\Interfaces\Author\DashboardInterface',
-            'App\Repositories\Author\DashboardRepository'
-        );
-		
         $this->app->bind(
             'Illuminate\Contracts\Filesystem\Factory',
             'Illuminate\Contracts\Filesystem\Factory'

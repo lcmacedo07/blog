@@ -17,6 +17,7 @@
                   <tr>
                     <th>Titulo</th>
                     <th>Autor</th>
+                    <th>Categoria</th>
                     <th>visibility</th>
                     <th>Está Aprovado</th>
                     <th>Status</th>
@@ -29,7 +30,12 @@
                     <tr>
                       {{-- <td>{{ str_limit($data->title, '10') }}</td> --}}
                       <td>{{ $data->title }}</td>
-                      <td>{{ $data->name }}</td>
+                      <td>{{ $data->user->name }}</td>
+                      @if ($data->categories->isNotEmpty())
+                          <td>{{ $data->categories->first()->name }}</td>
+                      @else
+                          <td>Sem categoria</td>
+                      @endif
                       <td>{{ $data->view_count }}</td>
                       <td>
                         @if($data->is_approved == true)

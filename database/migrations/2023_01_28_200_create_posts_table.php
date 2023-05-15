@@ -25,7 +25,9 @@ class CreatePostsTable extends Migration
             $table->integer('view_count')->default(0);
             $table->boolean('status')->default(false);
             $table->boolean('is_approved')->default(false);
+
             $table->timestamps();
+			$table->softDeletes();
         });
     }
 } 

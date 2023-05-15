@@ -3,86 +3,80 @@
 @section('content')
     <div class="container mx-auto flex flex-wrap py-6">
 
-        <!-- Posts Section -->
-        <section class="w-full md:w-2/3 flex flex-col items-center px-3">
 
+        <section class="flex flex-wrap justify-center">
             @foreach ($posts as $post)
-                <article class="flex flex-col shadow my-4">
-                    <!-- Article Image -->
-                    <a href="{{ route('post.details', $post->slug) }}" class="hover:opacity-75">
-                        {{-- <img src="https://source.unsplash.com/collection/1346951/1000x500?sig=1"> --}}
-                        <img src="{{ Storage::disk('public')->url('post/' . $post->image) }}" alt="{{ $post->title }}">
-                    </a>
-
-                    <div class="bg-white flex flex-col justify-start p-6">
-                        <!-- nome da categoria -->
-                        <a href="{{ route('post.details', $post->slug) }}" class="text-blue-700 text-sm font-bold uppercase pb-4">Technology</a>
+                <article class="w-full md:w-1/3 flex flex-col items-center px-3 mb-6">
+                    <div class="bg-white flex flex-col justify-start p-6 h-full">
+                        <a href="{{ route('post.details', $post->slug) }}" class="hover:opacity-75">
+                            <img src="{{ Storage::disk('public')->url('post/' . $post->image) }}"
+                                alt="{{ $post->title }}" class="w-full h-auto">
+                        </a>
+                        <a href="{{ route('post.details', $post->slug) }}"
+                            class="text-blue-700 text-sm font-bold uppercase pb-4">{{ optional($post->categories->first())->name }}</a>
                         <!-- nome da categoria -->
                         <a href="{{ route('post.details', $post->slug) }}"
                             class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $post->title }}</a>
-
-
+        
                         <!-- nome do autor -->
                         <p href="#" class="text-sm pb-3">
                             Por <a href="#" class="font-semibold hover:text-gray-800">{{ $post->user->username }}</a>,
                             Publicado em {{ $post->created_at }}
                         </p>
                         <!-- nome do autor -->
-
-                        <a class="pb-6">{{ $post->body }}</a>
-
-                        <a href="{{ route('post.details', $post->slug) }}" class="uppercase text-gray-800 hover:text-black">Continue Reading <i
+        
+                        <p class="pb-6">{{ Str::limit($post->body, 200) }}</p>
+        
+                        <a href="{{ route('post.details', $post->slug) }}"
+                            class="uppercase text-gray-800 hover:text-black mt-auto">Continue Reading <i
                                 class="fas fa-arrow-right"></i></a>
                     </div>
                 </article>
             @endforeach
-
-            <!-- Pagination -->
-            <div class="flex items-center py-8">
-                <a href="#"
-                    class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
-                <a href="#"
-                    class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center">2</a>
-                <a href="#"
-                    class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3">Next
-                    <i class="fas fa-arrow-right ml-2"></i></a>
-            </div>
-
         </section>
+        
+        
 
-        <!-- Sidebar Section -->
-        <aside class="w-full md:w-1/3 flex flex-col items-center px-3">
-
-            <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                <p class="text-xl font-semibold pb-5">About Us</p>
-                <p class="pb-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas mattis est eu odio
-                    sagittis tristique. Vestibulum ut finibus leo. In hac habitasse platea dictumst.</p>
-                <a href="#"
-                    class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-4">
-                    Get to know us
-                </a>
-            </div>
-
-            <div class="w-full bg-white shadow flex flex-col my-4 p-6">
-                <p class="text-xl font-semibold pb-5">Instagram</p>
-                <div class="grid grid-cols-3 gap-3">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=1">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=2">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=3">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=4">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=5">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=6">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=7">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=8">
-                    <img class="hover:opacity-75" src="https://source.unsplash.com/collection/1346951/150x150?sig=9">
-                </div>
-                <a href="#"
-                    class="w-full bg-blue-800 text-white font-bold text-sm uppercase rounded hover:bg-blue-700 flex items-center justify-center px-2 py-3 mt-6">
-                    <i class="fab fa-instagram mr-2"></i> Follow @dgrzyb
-                </a>
-            </div>
-
-        </aside>
+        <div class="pagination">
+            <a href="{{ $posts->url(1) }}" class="pagination-link{{ $posts->currentPage() === 1 ? ' active' : '' }}">1</a>
+            @if ($posts->currentPage() > 3)
+                <span class="pagination-dots">...</span>
+            @endif
+            @for ($page = max(2, $posts->currentPage() - 2); $page <= min($posts->lastPage() - 1, $posts->currentPage() + 2); $page++)
+                <a href="{{ $posts->url($page) }}"
+                    class="pagination-link{{ $posts->currentPage() === $page ? ' active' : '' }}">{{ $page }}</a>
+            @endfor
+            @if ($posts->currentPage() < $posts->lastPage() - 2)
+                <span class="pagination-dots">...</span>
+            @endif
+            @if ($posts->lastPage() > 1)
+                <a href="{{ $posts->url($posts->lastPage()) }}"
+                    class="pagination-link{{ $posts->currentPage() === $posts->lastPage() ? ' active' : '' }}">{{ $posts->lastPage() }}</a>
+            @endif
+        </div>
 
     </div>
 @endsection
+
+<style>
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+    .pagination-link {
+        display: inline-block;
+        padding: 8px;
+        margin: 0 4px;
+        border: 1px solid #ccc;
+        text-decoration: none;
+        color: #555;
+    }
+
+    .pagination-link.active {
+        background-color: #555;
+        color: #fff;
+    }
+</style>
