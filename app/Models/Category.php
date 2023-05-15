@@ -18,7 +18,7 @@ class Category extends Model
         'id',
 		'name',
         'slug',
-        'image',
+        // 'image',
          
     ];
      

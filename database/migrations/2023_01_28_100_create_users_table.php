@@ -20,6 +20,10 @@ class CreateUsersTable extends Migration {
             $table->string('password');
             $table->string('image')->default('default.png');
             $table->text('about')->nullable();
+            $table->string('linkedin', 90)->unique()->nullable();
+            $table->string('instagram', 90)->unique()->nullable();
+            $table->string('twitter', 90)->unique()->nullable();
+            $table->string('facebook', 90)->unique()->nullable();
             $table->rememberToken();
 
             $table->timestamps();

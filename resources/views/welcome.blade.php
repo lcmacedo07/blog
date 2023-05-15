@@ -37,46 +37,55 @@
         
         
 
-        <div class="pagination">
+        <div class="pagination container mx-auto flex flex-wrap py-6">
             <a href="{{ $posts->url(1) }}" class="pagination-link{{ $posts->currentPage() === 1 ? ' active' : '' }}">1</a>
             @if ($posts->currentPage() > 3)
                 <span class="pagination-dots">...</span>
             @endif
             @for ($page = max(2, $posts->currentPage() - 2); $page <= min($posts->lastPage() - 1, $posts->currentPage() + 2); $page++)
-                <a href="{{ $posts->url($page) }}"
-                    class="pagination-link{{ $posts->currentPage() === $page ? ' active' : '' }}">{{ $page }}</a>
+                <a href="{{ $posts->url($page) }}" class="pagination-link{{ $posts->currentPage() === $page ? ' active' : '' }}">{{ $page }}</a>
             @endfor
             @if ($posts->currentPage() < $posts->lastPage() - 2)
                 <span class="pagination-dots">...</span>
             @endif
             @if ($posts->lastPage() > 1)
-                <a href="{{ $posts->url($posts->lastPage()) }}"
-                    class="pagination-link{{ $posts->currentPage() === $posts->lastPage() ? ' active' : '' }}">{{ $posts->lastPage() }}</a>
+                <a href="{{ $posts->url($posts->lastPage()) }}" class="pagination-link{{ $posts->currentPage() === $posts->lastPage() ? ' active' : '' }}">{{ $posts->lastPage() }}</a>
             @endif
         </div>
+        
 
     </div>
 @endsection
 
 <style>
-    .pagination {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-top: 20px;
-    }
+    
 
-    .pagination-link {
-        display: inline-block;
-        padding: 8px;
-        margin: 0 4px;
-        border: 1px solid #ccc;
-        text-decoration: none;
-        color: #555;
-    }
+    /* Estilos para a paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
 
-    .pagination-link.active {
-        background-color: #555;
-        color: #fff;
-    }
+.pagination-link {
+    display: inline-block;
+    padding: 0.5rem;
+    margin: 0 0.25rem;
+    color: #3182ce;
+    text-decoration: none;
+    border: 1px solid #3182ce;
+    border-radius: 4px;
+}
+
+.pagination-link.active {
+    background-color: #3182ce;
+    color: white;
+}
+
+.pagination-dots {
+    margin: 0 0.25rem;
+    color: #555555;
+}
+
 </style>

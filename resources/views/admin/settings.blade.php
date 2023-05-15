@@ -16,6 +16,9 @@
               <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#password" id="senha-btn">MUDAR SENHA</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#socialnetwork" id="socialnetwork-btn">ADICIONAR REDES SOCIAIS</a>
+              </li>
             </ul>
   
             <div class="tab-content">
@@ -72,6 +75,35 @@
                     <label for="confirm_password">Confirmar Senha:</label>
                     <input type="password" id="confirm_password" class="form-control" placeholder="Digite sua Nova Senha Novamente"
                     name="password_confirmation">
+                  </div>
+
+                  <button type="submit" class="btn btn-primary">ALTERAR</button>
+                </form>
+              </div>
+  
+              <div class="tab-pane fade" id="socialnetwork">
+                <form action="{{ route('socialnetwork.update') }}" method="POST" class="form-horizontal">
+                  @csrf
+                  @method('PUT')
+  
+                  <div class="form-group">
+                    <label for="linkedin">LinkedIn:</label>
+                    <input type="text" id="linkedin" class="form-control" placeholder="Digite seu perfil do LinkedIn" name="linkedin" value="{{ Auth::user()->linkedin }}">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="instagram">Instagram:</label>
+                    <input type="text" id="instagram" class="form-control" placeholder="Digite seu perfil do Instagram" name="instagram" value="{{ Auth::user()->instagram }}">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="twitter">Twitter:</label>
+                    <input type="text" id="twitter" class="form-control" placeholder="Digite seu perfil do Twitter" name="twitter" value="{{ Auth::user()->twitter }}">
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="facebook">Facebook:</label>
+                    <input type="text" id="Facebook" class="form-control" placeholder="Digite seu perfil do Facebook" name="facebook" value="{{ Auth::user()->twitter }}">
                   </div>
 
                   <button type="submit" class="btn btn-primary">ALTERAR</button>
@@ -147,10 +179,12 @@ label {
 // Capturar os elementos dos botões
 const perfilBtn = document.querySelector('#perfil-btn');
 const senhaBtn = document.querySelector('#senha-btn');
+const senhaBtn = document.querySelector('#socialnetwork-btn');
 
 // Capturar as guias correspondentes
 const perfilTab = document.querySelector('#profile');
 const senhaTab = document.querySelector('#password');
+const senhaTab = document.querySelector('#socialnetwork');
 
 // Adicionar os ouvintes de evento aos botões
 perfilBtn.addEventListener('click', function() {

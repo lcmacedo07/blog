@@ -26,8 +26,6 @@ class SettingRepository implements SettingInterface
     
 	public function index()
 	{
-		// dd(Auth::user()->role->id);
-
 		return view('admin.settings');
 	}
 
@@ -123,4 +121,56 @@ class SettingRepository implements SettingInterface
 		return redirect()->route('settings')->with('success', 'Perfil atualizado com sucesso!');
 	}
 
+	public function updateSocialnetwork(Request $request) {
+
+		$dataForm = $request->all();
+
+		// $validator = Validator::make($dataForm,[
+        //     'name' => 'required',
+        //     'email' => 'required|email',
+        //     'image' => 'required|image',
+        // ]);
+
+		// if ($validator->fails()) {
+        //     throw new \Exception('Os dados não são válidos: ' . implode(', ', $validator->errors()->all()));
+        // }
+
+		// $image = $request->file('image');
+	
+		// if (isset($image)) {
+		// 	$slug = Str::slug($dataForm['name']);
+		// 	$currentDate = Carbon::now()->toDateString();
+		// 	$imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+	
+		// 	if (!Storage::disk('public')->exists('profile')) {
+		// 		Storage::disk('public')->makeDirectory('profile');
+		// 	}
+	
+		// 	$profileImage = Image::make($image);
+		// 	$profileImage->resize(1600, 479);
+		// 	Storage::disk('public')->put('profile/'.$imagename, $profileImage->stream());
+	
+		// 	if (!Storage::disk('public')->exists('profile/slider')) {
+		// 		Storage::disk('public')->makeDirectory('profile/slider');
+		// 	}
+	
+		// 	$sliderImage = Image::make($image);
+		// 	$sliderImage->resize(1600, 479);
+		// 	Storage::disk('public')->put('profile/slider/'.$imagename, $sliderImage->stream());
+	
+		// 	$dataForm['image'] = $imagename;
+		// } else {
+		// 	$dataForm['image'] = "default.png";
+		// }
+	
+		// if (isset($dataForm['name'])) {
+		// 	$slug = ['slug' => Str::slug($dataForm['name'], '-')];
+		// 	$dataForm = array_merge($dataForm, $slug);
+		// }
+	
+		$model = $this->model->where('id', Auth::id())->first();
+		$model->update($dataForm);
+	
+		return redirect()->route('settings')->with('success', 'Perfil atualizado com sucesso!');
+	}
 }

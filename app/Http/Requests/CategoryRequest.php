@@ -16,7 +16,7 @@ class CategoryRequest extends FormRequest
         return [
             
 			'name' => 'required|max:120|unique:categories,name'.$this->id,
-			'image' => 'required|mimes:jpeg,bmp,png,jpg',
+			// 'image' => 'required|mimes:jpeg,bmp,png,jpg',
         ];
     }
 
@@ -26,7 +26,7 @@ class CategoryRequest extends FormRequest
             
 			'name.required' => 'NOME nao foi selecionado.',
 			'name.max' => 'NOME deve ter no maximo :max caracteres.',
-			'image.required' => 'IMAGEM nao foi selecionado.',
+			// 'image.required' => 'IMAGEM nao foi selecionado.',
         ];
     }
 }

@@ -19,16 +19,19 @@ class SettingController extends Controller {
         return $this->interface->index();
     }
 
-    // public function updateProfile(UserRequest $request)
     public function updateProfile(Request $request)
     {
         return $this->interface->updateProfile($request);
     }
 
-    // public function updatePassword(UserRequest $request)
     public function updatePassword(Request $request)
     {
         return $this->interface->updatePassword($request);
+    }
+
+    public function updateSocialnetwork(Request $request)
+    {
+        return $this->interface->updateSocialnetwork($request);
     }
      
 }

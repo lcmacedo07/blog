@@ -51,33 +51,33 @@ class CategoryRepository implements CategoryInterface
 	public function store($request) {
 		$dataForm = $request->all();
 	
-		$image = $request->file('image');
+		// $image = $request->file('image');
 	
-		if (isset($image)) {
-			$slug = Str::slug($dataForm['name']);
-			$currentDate = Carbon::now()->toDateString();
-			$imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+		// if (isset($image)) {
+		// 	$slug = Str::slug($dataForm['name']);
+		// 	$currentDate = Carbon::now()->toDateString();
+		// 	$imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 	
-			if (!Storage::disk('public')->exists('category')) {
-				Storage::disk('public')->makeDirectory('category');
-			}
+		// 	if (!Storage::disk('public')->exists('category')) {
+		// 		Storage::disk('public')->makeDirectory('category');
+		// 	}
 	
-			$categoryImage = Image::make($image);
-			$categoryImage->resize(1600, 479);
-			Storage::disk('public')->put('category/'.$imagename, $categoryImage->stream());
+		// 	$categoryImage = Image::make($image);
+		// 	$categoryImage->resize(1600, 479);
+		// 	Storage::disk('public')->put('category/'.$imagename, $categoryImage->stream());
 	
-			if (!Storage::disk('public')->exists('category/slider')) {
-				Storage::disk('public')->makeDirectory('category/slider');
-			}
+		// 	if (!Storage::disk('public')->exists('category/slider')) {
+		// 		Storage::disk('public')->makeDirectory('category/slider');
+		// 	}
 	
-			$sliderImage = Image::make($image);
-			$sliderImage->resize(1600, 479);
-			Storage::disk('public')->put('category/slider/'.$imagename, $sliderImage->stream());
+		// 	$sliderImage = Image::make($image);
+		// 	$sliderImage->resize(1600, 479);
+		// 	Storage::disk('public')->put('category/slider/'.$imagename, $sliderImage->stream());
 	
-			$dataForm['image'] = $imagename;
-		} else {
-			$dataForm['image'] = "default.png";
-		}
+		// 	$dataForm['image'] = $imagename;
+		// } else {
+		// 	$dataForm['image'] = "default.png";
+		// }
 	
 		if (isset($dataForm['name'])) {
 			$slug = ['slug' => Str::slug($dataForm['name'], '-')];
@@ -97,33 +97,33 @@ class CategoryRepository implements CategoryInterface
 	public function update($id, $request) {
 		$dataForm = $request->all();
 	
-		$image = $request->file('image');
+		// $image = $request->file('image');
 	
-		if (isset($image)) {
-			$slug = Str::slug($dataForm['name']);
-			$currentDate = Carbon::now()->toDateString();
-			$imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+		// if (isset($image)) {
+		// 	$slug = Str::slug($dataForm['name']);
+		// 	$currentDate = Carbon::now()->toDateString();
+		// 	$imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
 	
-			if (!Storage::disk('public')->exists('category')) {
-				Storage::disk('public')->makeDirectory('category');
-			}
+		// 	if (!Storage::disk('public')->exists('category')) {
+		// 		Storage::disk('public')->makeDirectory('category');
+		// 	}
 	
-			$categoryImage = Image::make($image);
-			$categoryImage->resize(1600, 479);
-			Storage::disk('public')->put('category/'.$imagename, $categoryImage->stream());
+		// 	$categoryImage = Image::make($image);
+		// 	$categoryImage->resize(1600, 479);
+		// 	Storage::disk('public')->put('category/'.$imagename, $categoryImage->stream());
 	
-			if (!Storage::disk('public')->exists('category/slider')) {
-				Storage::disk('public')->makeDirectory('category/slider');
-			}
+		// 	if (!Storage::disk('public')->exists('category/slider')) {
+		// 		Storage::disk('public')->makeDirectory('category/slider');
+		// 	}
 	
-			$sliderImage = Image::make($image);
-			$sliderImage->resize(1600, 479);
-			Storage::disk('public')->put('category/slider/'.$imagename, $sliderImage->stream());
+		// 	$sliderImage = Image::make($image);
+		// 	$sliderImage->resize(1600, 479);
+		// 	Storage::disk('public')->put('category/slider/'.$imagename, $sliderImage->stream());
 	
-			$dataForm['image'] = $imagename;
-		} else {
-			$dataForm['image'] = "default.png";
-		}
+		// 	$dataForm['image'] = $imagename;
+		// } else {
+		// 	$dataForm['image'] = "default.png";
+		// }
 	
 		if (isset($dataForm['name'])) {
 			$slug = ['slug' => Str::slug($dataForm['name'], '-')];

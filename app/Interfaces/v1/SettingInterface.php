@@ -11,5 +11,6 @@ interface SettingInterface {
 	public function index();
 	public function updateProfile(Request $request);
 	public function updatePassword(Request $request);
+	public function updateSocialnetwork(Request $request);
 
 }

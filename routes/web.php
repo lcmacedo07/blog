@@ -33,7 +33,7 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function() {
 
     Route::get('settings', [SettingController::class, 'index'])->name('settings');
     Route::put('profile-update', [SettingController::class, 'updateProfile'])->name('profile.update');
-    Route::put('password-update', [SettingController::class, 'updatePassword'])->name('password.update');
+    Route::put('socialnetwork-update', [SettingController::class, 'updateSocialnetwork'])->name('socialnetwork.update');
 
     Route::resource('categories', CategoryController::class);
     Route::resource('posts', v1PostController::class);
