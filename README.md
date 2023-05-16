@@ -8,7 +8,7 @@ git clone https://github.com/lcmacedo07/blog
 ```
 
 ```sh
-cd overdrive/
+cd blog/
 ```
 
 Crie o Arquivo .env
